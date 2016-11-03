@@ -1,15 +1,20 @@
 package org.programmiersportgruppe.totallylazy;
 
 import com.googlecode.totallylazy.Group;
+import com.googlecode.totallylazy.Option;
 import com.googlecode.totallylazy.Pair;
 import com.googlecode.totallylazy.Sequence;
 import com.googlecode.totallylazy.parser.CharacterSequence;
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
+
+import static com.googlecode.totallylazy.Option.none;
+import static com.googlecode.totallylazy.Option.some;
 import static com.googlecode.totallylazy.Sequences.sequence;
 import static com.googlecode.totallylazy.numbers.Integers.range;
 import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * [DOC file=README.md]
@@ -20,11 +25,10 @@ public class IntroductionTest {
      * This is a starting point for a tutorial for [TotallyLazy](https://totallylazy.com/) which has a all the things that we
      * are missing in the Java 8 class library.
      * <p>
-     * <p>
      * Sequence
      * ========
      * <p>
-     * The basic abstraction of TotallyLazy is a `Sequence`. A sequence is a bit like
+     * On of the basic abstractions of TotallyLazy is `Sequence`. A sequence is a bit like
      * an `Iterable` with a lot of useful methods. Wherever possible these methods are
      * lazily evaluated, e.g. `map`, `filter`, while some methods like `fold` force
      * the evaluation the chain so far.
@@ -79,7 +83,7 @@ public class IntroductionTest {
      * --------------------------------
      * <p>
      * There are a couple of ways to access elements of a sequence.
-     * Note that an index lookup can be expensive (rather than iterating over indexes
+     * Note that an index lookup can be expensive (rather than iterating over indices
      * consider map or fold operations):
      */
 
@@ -100,7 +104,7 @@ public class IntroductionTest {
      * There are a number of ways to get subranges of Sequences.
      * It is important to know that Sequences are immutable, i.e.
      * all these operations return new objects.
-     *
+     * <p>
      * Here some examples:
      */
     @Test
@@ -121,11 +125,11 @@ public class IntroductionTest {
     /**
      * toString
      * --------
-     *
-     *  The toString method can take a separator, that can be used
-     *  to construct strings from the string representations (as per toString)
-     *  of the elements of the sequence.
-     *  */
+     * <p>
+     * The toString method can take a separator, that can be used
+     * to construct strings from the string representations (as per toString)
+     * of the elements of the sequence.
+     */
     @Test
     public void toStringExample() {
         Sequence<String> words = sequence("mouse", "dog", "cat");
@@ -133,10 +137,9 @@ public class IntroductionTest {
     }
 
     /**
-     *
      * Zipping
      * -------
-     *
+     * <p>
      * Two sequences can be zipped into a single collection of pairs:
      */
     @Test
@@ -160,7 +163,8 @@ public class IntroductionTest {
 
     /**
      * A very common usecase is that while we iterate (or map!) over a sequence we need
-     * the current element and its index. This is what the `zipWithIndex` method is for: */
+     * the current element and its index. This is what the `zipWithIndex` method is for:
+     */
     @Test
     public void zipWithIndexExample() {
         Sequence<String> names = sequence("Mark", "Luke", "John", "Matthew");
@@ -222,7 +226,81 @@ public class IntroductionTest {
         assertEquals("Maude", groups.get(1).get(1).firstname);
     }
 
+
     /**
+     * Option
+     * ======
+     * <p>
+     * An `Option` represents a value that is optional. The traditional way
+     * to express this in Java is to use null for absent. This is problematic
+     * as there is no easy way of telling whether a value could be null.
+     * Where traditionally you would say a method that may or may not return a `String`
+     * returns `String`, with an `Option` you can say it returns `Option&lt;String&gt;`
+     * <p>
+     * A second issue is the explicit null checking that is needed whenever an operation
+     * is performed on a value that is potentially null.
+     * <p>
+     * This is an option that has a value (some):
+     */
+    @Test
+    public void optionExampleSome() {
+        Option<String> optionalString = some("Hello World!");
+
+        assertEquals(true, optionalString.isDefined());
+        assertEquals("Hello World!", optionalString.get());
+    }
+
+    /**
+     * Here an option without a value (none):
+     */
+    @Test
+    public void optionExampleNone() {
+        Option<String> optionalString = none();
+
+        assertEquals(false, optionalString.isDefined());
+        try {
+            optionalString.get();
+            fail("This should fail as the option is not defined");
+        } catch (NoSuchElementException ignored) {}
+    }
+
+
+    /** So far this is just a more explicit way to declare a type (and you could do this with the `Optional`
+     *  type of Java 8), but here is how you can avoid boilerplate null/ defined checks when working
+     *  with optional values.
+     *
+     *  Consider logic to parse a number that is optionally supplied as a string: */
+
+    @Test
+    public void optionMapExample() {
+        Option<String> optionalString = some("123");
+
+        // We can now perform all sorts of operations without checking explicitly:
+
+        Option<Integer> optionalNumber = optionalString.map(Integer::parseInt);
+        Option<Integer> optionalDouble = optionalNumber.map(n -> 2 * n);
+
+
+        assertEquals(true, optionalDouble.isDefined());
+        assertEquals(Integer.valueOf(246), optionalDouble.get());
+    }
+
+    /** Here the same code passing in `none`: */
+    @Test
+    public void optionMapExampleNone() {
+        Option<String> optionalString = none();
+
+        Option<Integer> optionalNumber = optionalString.map(Integer::parseInt);
+        Option<Integer> optionalDouble = optionalNumber.map(n -> 2 * n);
+
+        assertEquals(false, optionalDouble.isDefined());
+    }
+    
+    /**
+     *
+     * One way to think about options is as a collection that has either zero or one elements. In
+     * functional programming parlance they are both monads.
+     *
      * Development Info
      * ================
      * <p>
