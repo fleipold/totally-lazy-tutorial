@@ -118,8 +118,9 @@ public class IntroductionTest {
         assertEquals(sequence("A", "B"), strings.dropWhile(s -> Character.isDigit(s.charAt(0))));
     }
 
-    /** toString
-     *  --------
+    /**
+     * toString
+     * --------
      *
      *  The toString method can take a separator, that can be used
      *  to construct strings from the string representations (as per toString)

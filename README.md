@@ -89,7 +89,7 @@ assertEquals(sequence("A", "B"), strings.dropWhile(s -> Character.isDigit(s.char
 ~~~
 
 toString
- --------
+--------
 
  The toString method can take a separator, that can be used
  to construct strings from the string representations (as per toString)
