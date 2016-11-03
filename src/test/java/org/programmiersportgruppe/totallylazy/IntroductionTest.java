@@ -232,12 +232,12 @@ public class IntroductionTest {
      * ======
      * <p>
      * An `Option` represents a value that is optional. The traditional way
-     * to express this in Java is to use null for absent. This is problematic
+     * to express this in Java is to use `null` for absent values. This is problematic
      * as there is no easy way of telling whether a value could be null.
      * Where traditionally you would say a method that may or may not return a `String`
      * returns `String`, with an `Option` you can say it returns `Option&lt;String&gt;`
      * <p>
-     * A second issue is the explicit null checking that is needed whenever an operation
+     * A second issue is the explicit `null` checking that is needed whenever an operation
      * is performed on a value that is potentially null.
      * <p>
      * This is an option that has a value (some):
@@ -295,7 +295,7 @@ public class IntroductionTest {
 
         assertEquals(false, optionalDouble.isDefined());
     }
-    
+
     /**
      *
      * One way to think about options is as a collection that has either zero or one elements. In
