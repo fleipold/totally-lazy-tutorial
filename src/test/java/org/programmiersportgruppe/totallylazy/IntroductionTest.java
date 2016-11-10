@@ -31,7 +31,7 @@ public class IntroductionTest {
      * On of the basic abstractions of TotallyLazy is `Sequence`. A sequence is a bit like
      * an `Iterable` with a lot of useful methods. Wherever possible these methods are
      * lazily evaluated, e.g. `map`, `filter`, while some methods like `fold` force
-     * the evaluation the chain so far.
+     * the evaluation of the chain so far.
      * <p>
      * The typical way to construct a `Sequence` is to use one of the static `sequence` factory methods.
      */
@@ -92,11 +92,8 @@ public class IntroductionTest {
         Sequence<String> strings = sequence("1", "2", "3", "4");
 
         assertEquals("1", strings.first());
-
         assertEquals("2", strings.second());
-
         assertEquals("4", strings.last());
-
         assertEquals("3", strings.get(2));
     }
 
@@ -112,13 +109,9 @@ public class IntroductionTest {
         Sequence<String> strings = sequence("1", "2", "3", "A", "B");
 
         assertEquals(sequence("2", "3", "A", "B"), strings.tail());
-
         assertEquals(sequence("1", "2"), strings.take(2));
-
         assertEquals(sequence("1", "2", "3"), strings.takeWhile(s -> Character.isDigit(s.charAt(0))));
-
         assertEquals(sequence("3", "A", "B"), strings.drop(2));
-
         assertEquals(sequence("A", "B"), strings.dropWhile(s -> Character.isDigit(s.charAt(0))));
     }
 
@@ -307,10 +300,8 @@ public class IntroductionTest {
         Option<String> optionalString = some("123");
 
         // We can now perform all sorts of operations without checking explicitly:
-
         Option<Integer> optionalNumber = optionalString.map(Integer::parseInt);
         Option<Integer> optionalDouble = optionalNumber.map(n -> 2 * n);
-
 
         assertEquals(true, optionalDouble.isDefined());
         assertEquals(Integer.valueOf(246), optionalDouble.get());
