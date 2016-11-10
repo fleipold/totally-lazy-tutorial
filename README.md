@@ -196,6 +196,33 @@ try {
 } catch (NoSuchElementException ignored) {}
 ~~~
 
+You can also try to get the value of an option providing
+a default value should the option be none. This means you can avoid
+the none check:
+
+~~~ .java
+Option<String> optionalStringDefined = some("Hello");
+
+assertEquals("Hello", optionalStringDefined.getOrElse("default value"));
+
+Option<String> optionalStringUndefined = none();
+
+assertEquals("default value", optionalStringUndefined.getOrElse("default value"));
+~~~
+
+The old-school Java approach to optional values is to use `null` to indicate that
+there is no value.
+
+The `option` factory method provides a way to wrap a nullable value into an option:
+
+~~~ .java
+Option<String> optionalStringDefined = option("Hello");
+assertEquals(some("Hello"), optionalStringDefined);
+
+Option<String> optionalStringUndefined = option(null);
+assertEquals(none(), optionalStringUndefined);
+~~~
+
 So far this is just a more explicit way to declare a type (and you could do this with the `Optional`
  type of Java 8), but here is how you can avoid boilerplate null/ defined checks when working
  with optional values.
@@ -226,7 +253,7 @@ Option<Integer> optionalDouble = optionalNumber.map(n -> 2 * n);
 assertEquals(false, optionalDouble.isDefined());
 ~~~
 
-One way to think about options is as a collection that has either zero or one elements. In
+One way to think about options is as collections that have either zero or one element. In
 functional programming parlance they are both monads.
 
 Development Info
