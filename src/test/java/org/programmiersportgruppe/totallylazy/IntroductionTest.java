@@ -228,7 +228,7 @@ public class IntroductionTest {
      * to express this in Java is to use `null` for absent values. This is problematic
      * as there is no easy way of telling whether a value could be null.
      * Where traditionally you would say a method that may or may not return a `String`
-     * returns `String`, with an `Option` you can say it returns `Option&lt;String&gt;`
+     * returns `String`, with an `Option` you can say it returns `Option<String>`
      * <p>
      * A second issue is the explicit `null` checking that is needed whenever an operation
      * is performed on a value that is potentially null.
@@ -300,8 +300,10 @@ public class IntroductionTest {
         Option<String> optionalString = some("123");
 
         // We can now perform all sorts of operations without checking explicitly:
+
         Option<Integer> optionalNumber = optionalString.map(Integer::parseInt);
         Option<Integer> optionalDouble = optionalNumber.map(n -> 2 * n);
+
 
         assertEquals(true, optionalDouble.isDefined());
         assertEquals(Integer.valueOf(246), optionalDouble.get());
