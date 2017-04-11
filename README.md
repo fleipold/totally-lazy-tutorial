@@ -2,15 +2,15 @@
 
 This is a starting point for a tutorial for [TotallyLazy](https://totallylazy.com/) which has a all the things that we
 are missing in the Java 8 class library.
-<p>
+
 Sequence
 ========
-<p>
+
 On of the basic abstractions of TotallyLazy is `Sequence`. A sequence is a bit like
 an `Iterable` with a lot of useful methods. Wherever possible these methods are
 lazily evaluated, e.g. `map`, `filter`, while some methods like `fold` force
 the evaluation of the chain so far.
-<p>
+
 The typical way to construct a `Sequence` is to use one of the static `sequence` factory methods.
 
 ~~~ .java
@@ -27,7 +27,7 @@ assertEquals(fromVarargs, fromRange);
 
 Mapping
 -------
-<p>
+
 The `map` method applies a function to every element of the
 sequence and returns a sequence of these results:
 
@@ -50,7 +50,7 @@ assertEquals(sequence("1", "2", "3"), stringSequence);
 
 Accessing Elements and Subranges
 --------------------------------
-<p>
+
 There are a couple of ways to access elements of a sequence.
 Note that an index lookup can be expensive (rather than iterating over indices
 consider map or fold operations):
@@ -67,7 +67,7 @@ assertEquals("3", strings.get(2));
 There are a number of ways to get subranges of Sequences.
 It is important to know that Sequences are immutable, i.e.
 all these operations return new objects.
-<p>
+
 Here some examples:
 
 ~~~ .java
@@ -82,7 +82,7 @@ assertEquals(sequence("A", "B"), strings.dropWhile(s -> Character.isDigit(s.char
 
 toString
 --------
-<p>
+
 The toString method can take a separator, that can be used
 to construct strings from the string representations (as per toString)
 of the elements of the sequence.
@@ -94,7 +94,7 @@ assertEquals("mouse, dog, cat", words.toString(", "));
 
 Zipping
 -------
-<p>
+
 Two sequences can be zipped into a single collection of pairs:
 
 ~~~ .java
@@ -132,7 +132,7 @@ assertEquals("3. Matthew", namesWithIndex.get(3));
 
 Grouping
 --------
-<p>
+
 Sequences can be grouped by a key (function), like so:
 
 ~~~ .java
@@ -158,16 +158,16 @@ assertEquals("Maude", groups.get(1).get(1).firstname);
 
 Option
 ======
-<p>
+
 An `Option` represents a value that is optional. The traditional way
 to express this in Java is to use `null` for absent values. This is problematic
 as there is no easy way of telling whether a value could be null.
 Where traditionally you would say a method that may or may not return a `String`
 returns `String`, with an `Option` you can say it returns `Option<String>`
-<p>
+
 A second issue is the explicit `null` checking that is needed whenever an operation
 is performed on a value that is potentially null.
-<p>
+
 This is an option that has a value (some):
 
 ~~~ .java
@@ -251,7 +251,7 @@ functional programming parlance they are both monads.
 
 Development Info
 ================
-<p>
+
 This `README.md` is generated from the `IntroductionTest.java` test case.
 To regenerate the content run `mvn test`.
 
