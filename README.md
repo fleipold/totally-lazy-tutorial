@@ -252,7 +252,7 @@ functional programming parlance they are both monads.
 Development Info
 ================
 
-This `README.md` is generated from the `IntroductionTest.java` test case.
+This `README.md` is generated from the `IntroductionTest.java` test case using [`docufier`](https://github.com/programmiersportgruppe/docufier).
 To regenerate the content run `mvn test`.
 
 ~~~ .java
